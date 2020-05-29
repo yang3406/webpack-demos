@@ -7,6 +7,7 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimzeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   // entry: './src/index.js', // 单个入口
@@ -32,15 +33,26 @@ module.exports = {
       // ]
       use: [ //编译为独立css文件
         MiniCssExtractPlugin.loader,
-        'css-loader'
+        'css-loader',
       ]
     },
     {
       test: /.less$/,
       use: [
-        'style-loader',
+        // 'style-loader',
+        MiniCssExtractPlugin.loader,
         'css-loader', // loader是链式调用 先解析css 在把解析的放到style中 
-        'less-loader'
+        'less-loader',
+        {
+          loader: 'postcss-loader',
+          options: {
+            plugins: () => [
+              require('autoprefixer')({
+                browsers: ['last 2 version', '>1%', 'ios 7']
+              })
+            ]
+          }
+        }
       ]
 
     },
@@ -98,6 +110,7 @@ module.exports = {
         minifyJS: true,
         removeComments: false
       }
-    })
+    }),
+    new CleanWebpackPlugin()
   ]
 }

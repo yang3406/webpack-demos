@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import logo from './images/logo.jpg';
-import './search.css';
+import './search.less';
 class Search extends React.Component {
   render() {
     return <div class="search-text"> search Text img  preferct<img src={logo} /></div>;

@@ -4,6 +4,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   // entry: './src/index.js', // 单个入口
@@ -47,7 +48,9 @@ module.exports = {
     ]
   },
   plugins: [  // 文件编译后替换
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    // 删除上次构建的项目
+    new CleanWebpackPlugin()
   ],
   devServer: { // 设置服务
     contentBase: './dist', // 服务指向目录
